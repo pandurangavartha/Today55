@@ -1,0 +1,62 @@
+<!-- <div class="hold-transition login-page"> -->
+  
+
+
+        <div class="login-box"*ngIf="!forgotpwd">
+                <div class="login-logo">
+                    <img src="assets/images/ang.png" class="imagesize">
+                  </div>
+              <div class="login-cont">
+              <!-- /.login-logo -->
+              <div class="login-box-body">
+                <p class="login-box-msg" ><b>Sign in to start</b></p>
+                <div class="has-error" [hidden]="!errMessage">{{errMessage}}</div>
+                <form action="" method="" novalidate>
+                  <div class="form-group has-feedback" [ngClass]="{'has-error': email.invalid && (email.dirty || email.touched),'has-success': email.valid && (email.dirty || email.touched) }">
+                    <input type="email" class="form-control" id="email" placeholder="Enter Email" required name="email" [(ngModel)]="model.email" #email="ngModel"
+                    pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$">
+                    <div *ngIf="email.errors && (email.dirty || email.touched)" class="has-error">
+                    <div [hidden]="!email.errors.required">
+                      Email is required!
+                    </div>
+                    <div [hidden]="!email.errors.pattern">
+                      Please enter a valid email!
+                    </div>
+                  </div>
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                  </div>
+                  <div class="form-group has-feedback" [ngClass]="{'has-error': pwd.invalid && (pwd.dirty || pwd.touched),'has-success': pwd.valid && (pwd.dirty || pwd.touched) }">
+                    <input class="form-control" minlength="6"  type="password" placeholder="Password" id="pwd"  required name="pwd" [(ngModel)]="model.password" #pwd="ngModel" />
+                    <div *ngIf="pwd.errors && (pwd.dirty || pwd.touched)" class="has-error">
+                      <div [hidden]="!pwd.errors.required">
+                        Password is required!
+                      </div>
+                      <div [hidden]="!pwd.errors.minlength">
+                        Please enter a valid password!
+                      </div>
+                    </div>
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-8">
+                      <div class="checkbox icheck">
+                        <label class="">
+                          <!-- <a href="javascript:void(0)" (click)='forgotpwd = !forgotpwd'>I forgot my password</a><br> -->
+                        </label>
+                      </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4 text-center">
+                      <button type="submit" class="btn btn-primary btn-block btn-flat" (click)="login(model)">Sign In</button>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                </form>
+            </div>
+              <!-- /.login-box-body -->
+            </div>
+            </div>
+      
+      <!-- Forgot Password HTML ends -->
+      
+      <!-- </div>  -->

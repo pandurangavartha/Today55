@@ -1,0 +1,257 @@
+<div class="content-wrapper" style="max-height: 500px;overflow-y: scroll">
+
+  <section class="content-header">
+    <h1  *ngIf="role !== 'USER'">Add users</h1>
+  </section>
+  <section class="content-header">
+    <div class="p10" *ngIf="role !== 'USER'">
+      <div class="row">
+
+        <div class="col-xs-2" [ngClass]="{'has-error': first.invalid && (first.dirty || first.touched),'has-success': first.valid && (first.dirty || first.touched) }">
+          <input type="text" [(ngModel)]="inviteuser.firstname" class="form-control" placeholder="First Name" id="first" required name="first" minlength="3" #first="ngModel">
+          <div *ngIf="first.errors && (first.dirty || first.touched)" class="has-error">
+              <div [hidden]="!first.errors.required">
+                  firstName is required!
+              </div>
+              <div [hidden]="!first.errors.minlength">
+                  Please enter a valid firstName!
+              </div>
+          </div>
+        </div>
+        <div class="col-xs-2" [ngClass]="{'has-error': last.invalid && (last.dirty || last.touched),'has-success': last.valid && (last.dirty || last.touched) }">
+          <input type="test" [(ngModel)]="inviteuser.lastname" class="form-control" placeholder="Last Name" id="last" required name="last" minlength="3" #last="ngModel">
+          <div *ngIf="last.errors && (last.dirty || last.touched)" class="has-error">
+              <div [hidden]="!last.errors.required">
+                  lastName is required!
+              </div>
+              <div [hidden]="!last.errors.minlength">
+                  Please enter a valid lastName!
+              </div>
+          </div>
+        </div>
+        <!-- <div class="col-xs-5">
+          <input type="email" [(ngModel)]="inviteuser.email" class="form-control" placeholder="Email">
+        </div> -->
+        <div class="col-xs-2" [ngClass]="{'has-error': email.invalid && (email.dirty || email.touched),'has-success': email.valid && (email.dirty || email.touched) }">
+          <input type="email" class="form-control" id="email" placeholder="Email" required name="email"
+            [(ngModel)]="inviteuser.email" #email="ngModel" pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$">
+          <div *ngIf="email.errors && (email.dirty || email.touched)" class="has-error">
+            <div [hidden]="!email.errors.required">
+              Email is required!
+            </div>
+            <div [hidden]="!email.errors.pattern">
+              Please enter a valid email!
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-2" [ngClass]="{'has-error': pwd.invalid && (pwd.dirty || pwd.touched),'has-success': pwd.valid && (pwd.dirty || pwd.touched) }">
+          <input type="password" [(ngModel)]="inviteuser.password" class="form-control" placeholder="Password"  id="pwdfield" required name="pwd" minlength="5" #pwd="ngModel">
+          <div *ngIf="pwd.errors && (pwd.dirty || pwd.touched)" class="has-error">
+              <div [hidden]="!pwd.errors.required">
+                  Password is required!
+              </div>
+              <div [hidden]="!pwd.errors.minlength">
+                   password is weak !
+              </div>
+          </div>
+        </div>
+        <div class="form-group col-xs-2">
+          <select class="form-control" name="selectedTechs" [(ngModel)]="inviteuser.company_id" id="name" placeholder="company"
+            (change)="selectName();" required #id="ngModel">
+            <option *ngFor="let company of companyListDropDown" [value]="company.company_id._id" [selected]="company.company_id.name">{{company.company_id.name}}
+
+            </option>
+          </select>
+
+        </div>
+        <div class="form-group col-xs-1">
+          <select class="form-control" name="selectedTechs" [(ngModel)]="inviteuser.role_id" id="name" placeholder="Role"
+            (change)="selectName();" required #id="ngModel">
+            <option *ngFor="let role of userRoleslist" [value]="role._id" [selected]="role.title">{{role.title}}
+
+            </option>
+          </select>
+
+        </div>
+
+        <div class="col-xs-0">
+          <button (click)="addUser(inviteuser)" class="btn btn-primary" style="margin-left: 40px;">
+            <span class="glyphicon glyphicon-plus"></span>
+
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+              
+            <h3 class="box-title">Users</h3>
+            (
+            <b> {{UsersCount}} </b> )
+              <div class="form-group col-xs-2" >
+                <select class="form-control" name="selectedTechs" [(ngModel)]="selectedcompany.company_id" id="name"
+                  placeholder="company" (change)="selectCompany(company);" required #id="ngModel">
+                  <option *ngFor="let company of companyList" [value]="company.company_id._id" [selected]="company.company_id.name">{{company.company_id.name}}
+
+                  </option>
+                </select>
+
+              </div>
+            <div class="box-tools">
+              <!-- <div class="input-group input-group-sm" style="width: 200px;">
+                <input name="table_search" class="form-control pull-right" placeholder="Search" type="text" [(ngModel)]="data"
+                  (keyup)="searchTerm(data)">
+                <div class="input-group-btn">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div> -->
+            </div>
+          </div>
+
+          <!-- /.box-header -->
+          <div class="box-body table-responsive no-padding" style="max-height: 700px;overflow-y: scroll">
+            <table class="table table-hover">
+              <tbody  *ngIf = "(usersList != undfined && usersList.length > 0)">
+                <tr style="background-color: #ddd">
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <!-- <th>status</th> -->
+                  <th>Company</th>
+                  <th>Role</th>
+                  <th>Actions</th>
+                  <th></th>
+                </tr>
+                <tr *ngFor="let x of usersList">
+                  <td >
+                    <input [(ngModel)]="x.user_id.firstname" [disabled]="x.hideinputbox === undefined ? true : false" [ngStyle]="{'background-color':x.hideinputbox === undefined ? '' : 'lightgrey'}">
+                  </td>
+                  
+                  <!-- <td >{{x.firstname === undefined }}sxs
+                    <input [(ngModel)]="x.firstname === undefined ? x['user_id']['firstname']: x.firstname" (ngModelChange)="changeOnfirstName()" [disabled]="x.hideinputbox === undefined ? true : false" [ngStyle]="{'background-color':x.hideinputbox === undefined ? '' : 'lightgrey'}">
+                  </td> -->
+
+                  <td>
+                    <input [(ngModel)]="x.user_id.lastname" [disabled]="x.hideinputbox === undefined ? true : false" [ngStyle]="{'background-color':x.hideinputbox === undefined ? '' : 'lightgrey'}">
+                  </td>
+
+                  <td>{{x.email === undefined ? x.user_id.email: x.email}}</td>
+
+                  <!-- <td>
+                    <span [ngStyle]="{'background-color':x.user_id.isActive === true ? 'lightgreen' : 'red' }">
+                      {{x.user_id.isActive ? "Active" : "Inactive"}}
+                    </span>
+                  </td> -->
+                  <td>{{x.company_id === undefined ? '' : x.company_id.name}}</td>
+                  <td>
+                    <!-- {{x.role_id === undefined ? '' : x.role_id.title}} -->
+                    <div [hidden]="x.showbox === undefined ? false : true">
+                      {{ x.user_id.role_id.title }}
+                    </div>
+                    <div class="form-group col-xs-8" [hidden]="x.showbox === undefined ? true : false">
+                      <select class="form-control" name="selectedTechs" [(ngModel)]="x.user_id.role_id" id="name" placeholder="Role"
+                        (change)="selectName();" required #id="ngModel" [disabled]="x.hideinputbox === undefined ? true : false"
+                        [ngStyle]="{'background-color':x.hideinputbox === undefined ? '' : 'lightgrey'}">
+                        <option *ngFor="let role of userRoleslist" [value]="role._id" [selected]="role.title">{{role.title}}
+                        </option>
+                      </select>
+                    </div>
+                  </td>
+                  <td style="cursor:pointer ">
+                    <a title="Edit" [hidden]="x.pencil">
+                      <i class="fa fa-pencil" style="font-size:20px; color:black" (click)="openedit(x.user_id)"></i>
+                    </a>
+                    <a title="Update" [hidden]="!x.pencil">
+                      <i class="fa fa-check" style="font-size:17px; color:green" (click)="editUser(x.user_id,x.user_id)"></i>
+                    </a>
+                    <!-- <a title="Delete">
+                      <i class="fa fa-trash" style="font-size:20px; color:green"></i>
+                    </a> -->
+                  </td>
+                  <td style="cursor:pointer ">
+                    <span class="inline">
+                      <delete-confirm class="delete-confirm" title="Delete" [question]="'Are you sure you want to delete?'"
+                        (onConfirm)="sendDelete($event,(x.user_id))" (onCancel)="sendCancel($event)"></delete-confirm>
+                    </span>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+    </div>
+    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <li [ngClass]="{disabled:pager.currentPage === 1}">
+            <a (click)="setPage(1)">First</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === 1}">
+            <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+        </li>
+        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+            <a (click)="setPage(page)">{{page}}</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+            <a (click)="setPage(pager.currentPage + 1)">Next</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+            <a (click)="setPage(pager.totalPages)">Last</a>
+        </li>
+    </ul>
+
+    <div *ngIf="showLoader" class="fa fa-spinner fa-spin" style="font-size:50px;text-align: center;
+    position: absolute;top: 50%;left: 50%;"></div>
+  </section>
+  <!-- /.row (main row) -->
+</div>
+
+
+<!-- 
+<div id="companyModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Details</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input class="form-control" id="inputfirst3" name="first" placeholder="Name" type="text"  [(ngModel)]="company.name">
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+              <div class="col-sm-10">
+                <input class="form-control" id="inputEmail3" name="email" placeholder="EmailId" type="email"  [(ngModel)]="company.email">
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div> -->
+<!-- <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" (click)="resetUsersData()" >Save changes</button>
+            </div> -->
+<!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button class="btn btn-primary" type="submit" (click)="addCompany(company)">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div> -->

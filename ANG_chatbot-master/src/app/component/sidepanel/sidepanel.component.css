@@ -1,0 +1,54 @@
+.skin-blue .sidebar-menu>li>a {
+    color: #ffffff;
+    background: black;
+}
+
+.skin-blue .sidebar a:hover {
+    text-decoration: none;
+    color: #1baed6;
+}
+
+.skin-blue .sidebar-menu>li>a,
+.skin-blue .sidebar-menu>li.active>a,
+.skin-blue .sidebar-menu>li.menu-open>a {
+    color: #ffffff;
+    background: #1e282c;
+}
+
+.adminstyle {
+    margin: 11px 0 10px;
+    color: black;
+}
+
+.pl10 {
+    padding-left: 10px;
+}
+
+.fa {
+    color: black;
+}
+
+.imgsize {
+    height: 15px;
+}
+
+.my-class {
+    background: #b5fab5 !important;
+}
+
+.msg-class {
+    background: #f58787 !important;
+}
+
+.currenttab-class {
+    /* background: #e205e2!important; */
+    border: 5px solid #e205e2!important;    
+}
+.dot {
+    height: 15px;
+    width: 15px;
+    background-color: white;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left:20px;
+}

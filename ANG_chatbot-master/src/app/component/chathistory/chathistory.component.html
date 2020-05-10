@@ -1,0 +1,305 @@
+<div class="content-wrapper" style="max-height: 500px;overflow-y: scroll">
+    <!-- overflow-y: scroll -->
+
+
+    <section class="content" style="width:100%">
+        <div *ngIf="role === 'ADMIN'" style="padding-bottom: 20px ;font-weight: bold "> Companies:<select
+                class="form-control" name="selectedTechs" [(ngModel)]="selectedcompany.company_id" id="name"
+                placeholder="company" (change)="selectCompany(company);" required #selectedTechs="ngModel">
+                <!-- #id="ngModel" -->
+                <!-- <option value="">Select Company</option> -->
+                <option *ngFor="let company of companyList" [value]="company.company_id._id"
+                    [selected]="company.company_id.name">{{company.company_id.name}}
+
+                </option>
+            </select>
+
+        </div>
+        <div class="col-md-6 displayBox"
+            style="width:19%;float:left;height: 460px;overflow-y: scroll;font-weight: bold  ">
+            <div *ngFor="let user of usersList" class="grid ">
+                <ul class="example"
+                    style="margin-bottom: 8px ;padding-left:5px;box-shadow: 0 26px 97px rgba(0, 0, 0, 0.1); background:lightgray;min-height:34px;border-radius: 5px;text-align: start;cursor: pointer"
+                    [ngClass]="{'currenttab-class': currenttabidcss === true && userId === user._id}">
+                    <a *ngIf="user.notification_count"><span
+                            class="label label-success pull-right">{{user.notification_count}}</span></a>
+                    <li class="example" style="text-align: start" [routerLink]="['/chathistory']"
+                        (click)="selectedUser(user);openscroll()">
+                        {{user.email}}
+                    </li>
+                    <a *ngIf="user.online"><span class="label label-success"
+                            style="color: green">{{user.online === true ? 'online' : ''}}</span> </a>
+                    <div *ngIf="user.is_typing" style="color:green ">is Typing ....</div>
+                </ul>
+            </div>
+
+        </div>
+        <div style="float:right;width: 80%">
+
+            <div class="box-header with-border">
+                <!-- <i class="fa fa-text"></i> -->
+                <i class="fa fa-user" style="color: red"></i><b>({{usrsCount}})</b>
+                <div *ngFor="let user of usersList">
+                    <i class="fa fa-pencil" *ngIf="userId === user._id && user.is_typing"
+                        style="color:green ;font-size: 15px">is Typing
+                        ....</i>
+                </div>
+                <!-- <h3 class="box-title" style="color:red;font-size: bold;font-family: italic;margin-left: 50px">{{usernamekey.customerName
+                    !== undefined ? usernamekey.customerName : usernamekey.key}}</h3> -->
+                <div [hidden]="hideBox" *ngIf="showFlag"
+                    style="margin-left: 50%;border: 1px solid black;border-radius: 4px;background: white;width: 13% ">
+                    <i class="fa fa-close pull-right" style="font-size: 15px;cursor: pointer;"
+                        (click)="cancel();replyBox = false;showFlag = false;hideBox=false"></i>
+                    <span data-toggle="tooltip" title="" data-original-title="Reply Messages">
+                        <i class="fa fa-reply"
+                            style="color: green;padding-left:16px;margin-right: 20px;cursor: pointer;"
+                            (click)=" delt(y) ; replyBox=true;hideBox= true"></i>
+                    </span>
+                    <span data-toggle="tooltip" title="" data-original-title="Delete Messages">
+                        <i class="fa fa-trash" style="color: brown;cursor:pointer" data-toggle="modal"
+                            data-target="#msgDeleteModel" (click)=" delt(y) ;hideBox= true"></i>
+                    </span>
+                </div>
+                <i *ngIf="loadoption1" class="fa fa-refresh box-tools pull-right" style="font-size:24px;margin-right: 100px;cursor: pointer;" (click) ="getmoredata(); loadoption=true;loadoption1=false"></i>
+                <i *ngIf="loadoption" class="fa fa-refresh box-tools fa-spin pull-right" style="font-size:24px;margin-right: 100px;cursor: pointer;"  (click) ="getmoredata()">
+                </i>
+                <div class="box-tools pull-right">
+                    <span data-toggle="tooltip" title="" class="badge bg-light-blue" data-original-title="Messages">
+                        <i class="fa fa-comments">{{msgcount}}</i>
+                    </span>
+                </div>
+            </div>
+            <!-- DIRECT CHAT PRIMARY -->
+            <div class="box box-primary direct-chat direct-chat-primary">
+                <!-- /.box-header -->
+                <div class="box-body" style="height: 400px !important ; overflow: hidden">
+                    <!-- Conversations are loaded here -->
+                    <div class="direct-chat-messages" >
+                        <!-- Message. Default to the left -->
+                        <!-- <div *ngIf="chathistory.length == 0">"------ Please Select User ------"</div> -->
+                        <div class="direct-chat-msg" *ngFor="let y of chathistory ">
+                            <div *ngIf="y.sendr_id !== undefined">
+                                    <div *ngIf="y.msg_unread != undefined && y.msg_unread === true "
+                                    style="color: red; margin-left: 25%;
+                                    "><b>---------------------
+                                        Un Read Messages
+                                        ---------------------</b>
+                                </div>
+                                <div class="direct-chat-info clearfix">
+                                    <span
+                                        class="direct-chat-name  {{y.sendr_id._id == logeduserId ? 'pull-right':'pull-left'}}">{{y.sendr_id.email}}</span>
+                                    <i *ngIf="y.isRead === false && y.sendr_id._id == logeduserId"
+                                        class="fa fa-check-circle pull-right" style="font-size:20px;color: red"></i>
+                                    <i *ngIf="y.isRead === true && y.sendr_id._id == logeduserId"
+                                        class="fa fa-check-circle pull-right" style="font-size:20px;color: green"></i>
+                                </div>
+                                <!-- /.direct-chat-info -->
+
+                                <!-- <img class="direct-chat-img pull-right" src="assets/images/apple-icon-144x144.png" alt="Message User Image" *ngIf="y.type == 'operator'"> -->
+
+                                <div *ngIf="y.sendr_id._id !== logeduserId">
+                                    <img class="direct-chat-img pull-left" src="assets/images/user1-256x256.png"
+                                        alt="Message User Image" *ngIf="y.recer_id._id">
+                                </div>
+                                <div *ngIf="y.sendr_id._id === logeduserId">
+                                    <img class="direct-chat-img pull-right" src="assets/images/againt.jpg"
+                                        alt="Message User Image" *ngIf="logeduserId == y.sendr_id._id">
+                                </div>
+
+                                <!-- <a data-toggle="modal" data-target="#msgDeleteModel" style="cursor:pointer" (click)="delt(y)">
+                                <div class="direct-chat-text contenter {{y.sendr_id._id == logeduserId ? 'pull-right':'pull-left'}}" >
+                                    <span *ngIf="y.messages !== '' && !y.isDelete" [innerHTML]="y.messages"></span>
+                                    <span *ngIf="y.messages !== '' && y.isDelete" style="background: dimgray" >Message Deleted</span>
+                                </div>
+                                </a> -->
+
+                                <a *ngIf="!y.isDelete" (click)="delt1(y) ; showFlag = true" style="cursor: pointer;">
+                                    <div *ngIf="y.messages !== '' && !y.isDelete && y.document_url === undefined"
+                                        class="direct-chat-text contenter {{y.sendr_id._id == logeduserId ? 'pull-right':'pull-left'}}"
+                                        [ngStyle]="{'background-color':y.msg_blue === true ? 'lightblue' : '' }">
+                                        
+                                        <div *ngIf="y.reply_nm !== undefined && y.reply_nm !== '' && !y.isDelete" [innerHTML]="y.reply_nm" style="font-weight: bold;color:green"></div>
+                                      
+                                        <pre class="block-with-text pre1" *ngIf="y.reply_msg !== undefined && y.reply_msg !== '' && !y.isDelete && y.messagesLinks1 === undefined" 
+                                         style="background:whitesmoke;border-radius: 8px;">{{y.reply_msg}}</pre>
+
+                                        <div class="block-with-text" *ngIf="y.reply_msg !== undefined && y.reply_msg !== '' && !y.isDelete &&
+                                        y.messagesLinks1 !== undefined" [innerHTML]="y.messagesLinks1" style="background:whitesmoke;border-radius: 8px;"></div>
+                                        <!-- <span *ngIf="y.messages !== '' && !y.isDelete" [innerHTML]="y.messages"></span> -->
+                                        <!-- <pre class="pre" *ngIf="y.messagesPreTag !==undefined && y.messagesLinks === undefined && y.messages !== '' && !y.isDelete" >{{y.messages}}</pre> -->
+                                        <pre class="pre" *ngIf="y.messagesLinks === undefined && y.messages !== '' && !y.isDelete" >{{y.messages}}</pre>
+                                        <span *ngIf="y.messagesLinks !== undefined && !y.isDelete" [innerHTML]="y.messagesLinks"></span>
+                                        
+                                    </div>
+                                </a>
+                                <a *ngIf="y.isDelete && y.document_url === undefined">
+                                    <div
+                                        class="direct-chat-text contenter {{y.sendr_id._id == logeduserId ? 'pull-right':'pull-left'}}">
+                                        <span *ngIf="y.messages !== '' && y.isDelete"
+                                            style="background: lightcoral">Message Deleted</span>
+                                    </div>
+                                </a>
+
+
+                                <div *ngIf="y.document_url !== undefined && y.isDelete===true"
+                                    class="direct-chat-text contenter {{y.sendr_id._id == logeduserId ? 'pull-right':'pull-left'}}"
+                                    style="width: 200px;height: auto;">
+                                    <!-- <a href="{{y.document_url}}" target="_blank" download>
+                                        <img style="padding-bottom:10px;" src="{{y.document_url}}" />Download
+                                    </a> -->
+                                    Image Deleted
+                                </div>
+
+                                <div *ngIf="y.document_url !== undefined && y.isDelete!==true"
+                                    class="direct-chat-text contenter {{y.sendr_id._id == logeduserId ? 'pull-right':'pull-left'}}"
+                                    style="width: 200px;height: auto;">
+                                    <!-- <a href="{{y.document_url}}" target="_blank" download>
+                                        <img style="padding-bottom:10px;" src="{{y.document_url}}" />Download
+                                    </a> -->
+                                    <a *ngIf="!y.isDelete" data-toggle="modal" data-target="#msgDeleteModel"
+                                        style="cursor:pointer" (click)="delt(y)" class="fa fa-close"></a>
+                                    <img style="padding-bottom:10px;" src="{{y.document_url}}"
+                                        (click)="downloadImg(y.document_url,y)" />click on image to download
+                                </div>
+
+                                <div class="direct-chat-info clearfix" style="padding: 40px;">
+                                    <span
+                                        class="direct-chat-name  {{y.sendr_id._id == logeduserId ? 'pull-right':'pull-left'}}">
+                                        {{y.curnttDate}}</span>
+                                </div>
+
+                                <!-- /.direct-chat-text -->
+                            </div>
+
+                        </div>
+                        <i *ngIf="msgcount" class="fa fa-arrow-circle-o-down" style="font-size:20px;color:red;margin-left: 40%;cursor: pointer;"
+                        (click)="onScroll(true)">Click To Read</i>
+
+                        <div [hidden]="!disconnected">"------Customer Is Disconnected------"</div>
+                        <!-- /.direct-chat-msg -->
+
+                        <!-- Message to the right -->
+                        <!-- /.direct-chat-msg -->
+
+                    </div>
+                    <!--/.direct-chat-messages-->
+
+                </div>
+
+                <!-- <div class="col pl5" style="color: blue " [hidden]="istyping">is typing...</div> -->
+                <div [hidden]='userparamsId == undefined ? false : true' style="border-bottom: 2px solid grey"></div>
+                <div [hidden]='userparamsId == undefined ? true : false' class="col-md-12 ">
+                    <!-- <div class="box box-default box-solid " [hidden]='typebox1' style="background: #449d44">
+                        <div style="margin-left:40%;height:8%">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse" (click)="joindata(); joinchat(); typebox1 =!typebox1">
+                                <i class="fa fa-plus" style="font-size: 10px;color: white;" >J0in In To Chat</i>
+                            </button>
+                        </div>
+                    </div> -->
+                    <div class="box-footer" style="border-top:0px;padding:0px">
+
+                        <div class="input-group">
+                            <div *ngIf="replyBox" style="border-radius: 5px;">
+                                <i class="fa fa-close pull-right" style="font-size: 15px;cursor: pointer;"
+                                    (click)="cancel();replyBox = false;showFlag = false;hideBox=false"></i>
+                                <span *ngIf="replyBox" class="form-control" style="color: green;
+                                 max-block-size: fit-content;padding: 0px;background: lightgray;padding-left: 1em;">
+                                    <b>{{msgInfo ===undefined ? '':msgInfo.sendr_id.email}}</b></span>
+                                <div *ngIf="replyBox" class="block-with-text" name="topic" id="m" autocomplete="off"
+                                    style="background: lightgray;padding-left: 1em;padding-right: 1em">
+                                    {{msgInfo ===undefined ? '':msgInfo.messages}}
+                                </div>
+                            </div>
+                            <textarea class="form-control" name="topic" id="m" autocomplete="off" [(ngModel)]="messageText"
+                                (keyup.enter)="sendmessage(messageText) ;replyBox=false;showFlag = false;hideBox=false"
+                                type="text" placeholder="Type a message ..." autofocus=""
+                                (ngModelChange)="valuechange($event)" [disabled]="disconnecte" (keyup)="send($event)"></textarea>
+                            <!-- <span class="input-group-btn btn btn-success btn-flat">
+                                <input type="file" name="image" [(ngModel)]="file" (change)="uploadImage($event)"
+                                    id="name" />
+                                <img *ngIf="showpreview" style="padding-bottom:10px;" src="{{images}}" />
+                                <img *ngIf="showpreviewafterEdit" style="padding-bottom:10px;"
+                                    src="{{productCategory.image}}" />
+                            </span> -->
+
+
+                            <span class="image-upload input-group-btn btn-default btn-flat">
+                                <label for="file-input">
+                                    <i class="fa fa-paperclip" aria-hidden="true"
+                                        style="font-size: 32px;color: red"></i>
+                                </label>
+                                <input type="file" name="image" [(ngModel)]="file" (change)="uploadImage($event)"
+                                    id="file-input" style="opacity: 0;" />
+                                <img *ngIf="showpreview" style="padding-bottom:10px;" src="{{images}}" />
+                                <img *ngIf="showpreviewafterEdit" style="padding-bottom:10px;"
+                                    src="{{productCategory.image}}" />
+
+                                <!-- <input id="file-input" type="file"/> -->
+                            </span>
+
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-success btn-flat" [disabled]="disabled"
+                                    (click)="sendmessage(messageText);replyBox=false"
+                                    [disabled]="disconnecte">Send</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div>
+                        <div class="col pl5" style="width:85%;margin-bottom: 10px;" [hidden]=typebox>
+                            <input class="form-control" name="topic" id="m" autocomplete="off" [(ngModel)]="messageText" (keyup.enter)="sendmessage(messageText)"
+                                type="text" placeholder="Type a message" autofocus="" (ngModelChange)="valuechange($event)" [disabled]="disconnecte">
+                        </div>
+                        <div class="col width50 pl5" style="width:10%;" [hidden]="typebox">
+                            <button [disabled]="disabled" (click)="sendmessage(messageText)" [disabled]="disconnecte">
+                                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div> -->
+
+                <!-- <div class="box box-default box-solid collapsed-box "> -->
+
+
+                <!-- /.box-header -->
+                <!-- <div class="box-body" style="display: none;">
+                           
+                        </div> -->
+                <!-- /.box-body -->
+                <!-- </div> -->
+                <!-- /.box -->
+                <!-- </div> -->
+                <!-- /.box-body -->
+                <!-- <div class="box-footer">
+                      
+                    </div> -->
+                <!-- /.box-footer-->
+            </div>
+            <!--/.direct-chat -->
+        </div>
+
+        <div *ngIf="showLoader" class="fa fa-spinner fa-spin" style="font-size:50px;text-align: center;
+            position: absolute;top: 50%;left: 50%;"></div>
+    </section>
+    <!-- /.row (main row) -->
+</div>
+
+<div id="msgDeleteModel" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 50%;margin: 36%;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                (click)="cancel();showFlag = false;hideBox=false">&times;</button>
+                <h4 class="modal-title" style="text-align: center">Are You Want To Delete this Message</h4>
+            </div>
+            <!-- <div class="modal-body">
+       
+        </div> -->
+            <div class="modal-footer" style="text-align: center">
+                <button type="button" class="btn btn-default" data-dismiss="modal"
+                (click)="cancel();showFlag = false;hideBox=false">Cancel</button>
+                <button class="btn btn-primary" type="submit"
+                    (click)="DeleteFun(msgInfo);showFlag = false;hideBox=false">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

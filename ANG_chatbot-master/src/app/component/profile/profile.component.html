@@ -1,0 +1,92 @@
+<app-header></app-header>
+<app-sidepanel></app-sidepanel>
+<div class="content-wrapper">
+  <!-- Main content -->
+  <section class="content">
+      <div>          
+          <div class="form-container" [hidden]="isEdit == true">
+            <form>
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <label class="control-label">{{model.name}}</label>
+                <div class="form-group">
+                  <label for="name">Email:</label>
+                  <label class="control-label">{{model.email}}</label>
+                  <div class="form-group">
+                    <label for="name">Age:</label>
+                    <label class="control-label">{{model.age}}</label>
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Gender:{{isEdit}}</label>
+                    <label class="control-label">{{model.gender}}</label>
+                  </div>
+        
+        
+                  <div class="form-group">
+                    <!-- <a routerLink="/dashboard" routerLinkActive="active"  class="btn btn-primary">cancel</a> -->
+                    <button class="btn btn-primary" (click)="moveToSecond()">Cancel</button>
+                    
+                    <!-- <button (click)="goBack()">Back</button> -->
+                    <a href="javascript:void(0)" class="btn btn-primary" (click)="isEdit = !isEdit">Edit</a>
+                  <!-- </div>
+            </form>
+            </div>
+            </div> -->
+            
+                    </div>
+                    </div>
+              </div>
+                </form>
+            </div>
+            <div class="form-container" *ngIf="isEdit">
+                <form (ngSubmit)="save()">
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" [(ngModel)]="model.name" class="form-control" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Email</label>
+                    <input type="text" name="email" [(ngModel)]="model.email" class="form-control" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Age</label>
+                    <input type="text" name="age" [(ngModel)]="model.age" class="form-control" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Gender</label>
+                    <input type="radio" [(ngModel)]="model.gender" name="gender" value="M">Male
+                    <br>
+                    <input type="radio" [(ngModel)]="model.gender" name="gender" value="F">Female
+                  </div>
+            
+            
+                  <div class="form-group">
+                      <button class="btn btn-primary" (click)="moveToSecond()">Cancel</button>
+                    <!-- <a class="btn btn-default" routerLink="/profile" routerLinkActive="active">Cancel</a> -->
+                    <button class="btn btn-primary" (click)="save()">Save</button>
+                  </div>
+                </form>
+              </div>
+        </div>
+
+ 
+        
+        
+      </section>
+
+    </div>
+
+    <app-footer></app-footer>  
+
+
+
+
+
+
+
+
+
+
+
+
+

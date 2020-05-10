@@ -1,0 +1,247 @@
+<div class="content-wrapper" style="max-height: 500px;overflow-y: scroll">
+  <section class="content-header">
+    <h1>Add Group</h1>
+  </section>
+  <section class="content-header">
+    <div class="p10">
+      <div class="row">
+        <div class="col-xs-0">
+          <a data-toggle="modal" data-target="#groupModal" style="cursor:pointer">
+            <button class="btn btn-primary" style="margin-left: 40px;">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Groups</h3>
+            (
+            <b> {{GroupCount}} </b> )
+            <div class="box-tools">
+              <!-- <div class="input-group input-group-sm" style="width: 200px;">
+                <input name="table_search" class="form-control pull-right" placeholder="Search" type="text" [(ngModel)]="data"
+                  (keyup)="searchTerm(data)">
+                <div class="input-group-btn">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div> -->
+            </div>
+          </div>
+
+          <!-- /.box-header -->
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+              <tbody  *ngIf = "(grouplist != undfined && grouplist.length > 0) || (invitedgrouplist != undfined && invitedgrouplist.length > 0)">
+                <tr style="background-color: #ddd">
+                  <th>Add User</th>
+                  <th>Name</th>
+                  <th>Company</th>
+                  <th>Owner</th>
+                  <th>Total Users</th>
+                  <th>Type</th>
+                  <th>Group</th>
+                  <!-- <th>Status</th> -->
+                  <th>Actions</th>
+                  <th></th>
+                </tr>
+                <ng-container *ngIf = "role === 'ADMIN'">
+                  <tr *ngFor="let x of grouplist">
+                    <td [routerLink]="['/groupchat',x.group_id._id]" style="cursor: pointer" (click)="updateNotification(x)">
+                      <!-- <u style="color:red">
+                        {{x.group_id == (undefined || null) ? '':x.group_id.name.slice(0, 2).toUpperCase()}}
+                      </u> -->
+                      <button class="btn btn-primary"  style="font-size: 5px" >
+                        <span class="glyphicon glyphicon-plus"></span>
+                      </button>
+                    </td>
+                    <td>
+                      <input [(ngModel)]="x.group_id == (undefined || null) ? '':x.group_id.name" [disabled]="x.hideinputbox === undefined ? true : false" [ngStyle]="{'background-color':x.hideinputbox === undefined ? '' : 'lightgrey'}">
+                    </td>
+                    <td>{{x.company_id == (undefined || null) ? '':x.company_id.name}}</td>
+                    <td>{{x.user_id == (undefined || null) ? '':x.user_id.firstname + x.user_id.lastname}}</td>
+                    <td>{{x.usrsCount == undefined ? '':x.usrsCount}}</td>
+                    <td>{{x.type == undefined ? '':x.type}}</td>
+                    <td>{{x.group_by_type == undefined ? '':x.group_by_type}}</td>
+                    <!-- <td>
+                      <span [ngStyle]="{'background-color':x.group_id.isActive === true ? 'lightgreen' : 'red' }">{{x.group_id.isActive ?
+                        "Active" : "Inactive"}}</span>
+                    </td> -->
+                    <td style="cursor:pointer ">
+                      <a title="Edit" [hidden]="x.pencil">
+                        <i class="fa fa-pencil" style="font-size:20px; color:black" (click)="openedit(x.group_id)"></i>
+                      </a>
+                      <a title="Update" [hidden]="!x.pencil">
+                        <i class="fa fa-check" style="font-size:17px; color:green" (click)="editGroup(x.group_id._id,x.group_id)"></i>
+                      </a>
+                      <a *ngIf="x.group_noti_count"><span class="label label-success pull-right">{{x.group_noti_count}}</span></a>
+                    </td>
+                      <td style="cursor:pointer ">
+                      <span *ngIf="role === 'ADMIN'" class="inline">
+                          <!-- logeduserId == x.group_id.created_by -->
+                          <delete-confirm class="delete-confirm" title="Delete" [question]="'Are you sure you want to delete?'"
+                          (onConfirm)="sendDelete($event,x.group_id._id,x)" (onCancel)="sendCancel($event)"></delete-confirm>
+                      </span>
+                      <!-- <span>
+                          <i *ngIf="x.created_by == undefined && logeduserId == x.user_id._id || (role=='ADMIN' && logeduserId != x.user_id._id)"
+                          class="fa fa-close pull-right" style="font-size:12px;color:red;padding-right: 5px;"
+                          (click)="delete(x)"></i>
+                      </span> -->
+                      
+                    </td>
+                  </tr>
+  
+                </ng-container>
+
+                <!-- <tr>InvitedGroups</tr> -->
+                <ng-container *ngIf = "role !== 'ADMIN'">
+                <tr *ngFor="let x of invitedgrouplist">
+                  <td [routerLink]="['/groupchat',x.group_id._id]" style="cursor: pointer" (click)="updateNotification(x)">
+                    <button class="btn btn-primary"  style="font-size: 5px" >
+                      <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                    <!-- <u style="color:red">
+                      {{x.group_id == (undefined || null) ? '':x.group_id.name.slice(0, 2).toUpperCase()}}
+                    </u> -->
+                  </td>
+                  <td>
+                    <input [(ngModel)]="x.group_id == (undefined || null) ? '':x.group_id.name" [disabled]="x.hideinputbox === undefined ? true : false" [ngStyle]="{'background-color':x.hideinputbox === undefined ? '' : 'lightgrey'}">
+                  </td>
+                  <td>{{x.company_id == (undefined || null) ? '':x.company_id.name}}</td>
+                  <td>{{x.group_id == (undefined || null) ? '':x.group_id.created_by.firstname + x.group_id.created_by.lastname}}</td>
+                  <td>{{x.usrsCount == undefined ? '':x.usrsCount}}</td>
+                  <td>{{x.type == undefined ? '':x.type}}</td>
+                  <td>{{x.group_by_type == undefined ? '':x.group_by_type}}</td>
+                  <!-- <td>
+                    <span [ngStyle]="{'background-color':x.group_id.isActive === true ? 'lightgreen' : 'red' }">{{x.group_id.isActive ?
+                      "Active" : "Inactive"}}</span>
+                  </td> -->
+                  <td style="cursor:pointer ">
+                    <a *ngIf="x.group_by_type === 'own'" title="Edit" [hidden]="x.pencil">
+                      <i class="fa fa-pencil" style="font-size:20px; color:black" (click)="openeInviteddit(x.group_id)"></i>
+                    </a>
+                    <a title="Update" [hidden]="!x.pencil">
+                      <i class="fa fa-check" style="font-size:17px; color:green" (click)="editInvitedGroup(x.group_id._id,x.group_id)"></i>
+                    </a>
+                    <a *ngIf="x.group_noti_count && x.isMute === false"><span class="label label-success pull-right">{{x.group_noti_count}}</span></a>
+                    <span *ngIf="role === 'ADMIN'" class="inline">
+                        <!-- logeduserId == x.group_id.created_by -->
+                      <delete-confirm class="delete-confirm" title="Delete" [question]="'Are you sure you want to delete?'"
+                        (onConfirm)="sendDelete($event,x.group_id._id)" (onCancel)="sendCancel($event)"></delete-confirm>
+                    </span>
+                    <span *ngIf="x.type !== 'public'">
+                        <i *ngIf="x.created_by == undefined && logeduserId == x.user_id._id || (role=='ADMIN' && logeduserId != x.user_id._id)"
+                        class="fa fa-close pull-right" style="font-size:12px;color:red;padding-right: 5px;"
+                        (click)="delete(x)"></i>
+                    </span>
+                    <span *ngIf="x.type === 'public'">
+                        <i *ngIf="x.created_by == undefined && logeduserId == x.user_id._id && x.isMute === false || (role=='ADMIN' && logeduserId != x.user_id._id && x.isMute === false) "
+                        class="fa fa-bell pull-right" style="font-size:15px;color:green;padding-right: 5px;"
+                        (click)="muteNotification(x)"></i>
+
+                        <i *ngIf="x.created_by == undefined && logeduserId == x.user_id._id && x.isMute === true || (role=='ADMIN' && logeduserId != x.user_id._id && x.isMute === true)"
+                        class="fa fa-bell-slash pull-right" style="font-size:15px;color:red;padding-right: 5px;"
+                        (click)="unMuteNotification(x)"></i>
+                    </span>
+
+                  </td>
+                </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+    </div>
+    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+      <li [ngClass]="{disabled:pager.currentPage === 1}">
+          <a (click)="setPage(1)">First</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === 1}">
+          <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+      </li>
+      <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+          <a (click)="setPage(page)">{{page}}</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a (click)="setPage(pager.currentPage + 1)">Next</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a (click)="setPage(pager.totalPages)">Last</a>
+      </li>
+  </ul>
+
+    <div *ngIf="showLoader" class="fa fa-spinner fa-spin" style="font-size:50px;text-align: center;
+      position: absolute;top: 50%;left: 50%;"></div>
+  </section>
+  <!-- /.row (main row) -->
+</div>
+
+
+
+<div id="groupModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Group Details</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="box-body">
+            <div class="form-group" [ngClass]="{'has-error': name.invalid && (name.dirty || name.touched),'has-success': name.valid && (name.dirty || name.touched) }">
+              <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+              <div class="col-sm-8" style="margin-left: -15px;">
+                <input class="form-control"  type="text" [(ngModel)]="group.name" id="name" required name="name"
+                placeholder="Name" minlength="3"  #name="ngModel" >
+              </div>
+              <div *ngIf="name.errors && (name.dirty || name.touched)" class="has-error">
+                  <div [hidden]="!name.errors.required">
+                      name is required!
+                  </div>
+                  <div [hidden]="!name.errors.minlength">
+                      Please enter a valid name!
+                  </div>
+              </div>
+            </div>
+            <div *ngIf="role == 'ADMIN'" class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
+              <div class="form-group col-xs-8">
+                <select class="form-control" name="selectedTechs" [(ngModel)]="group.company_id" id="name" placeholder="company"
+                  (change)="selectName();" required #id="ngModel">
+                  <option *ngFor="let company of companyList" [value]="company.company_id._id" [selected]="company.company_id.name">{{company.company_id.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Type</label>
+              <div class="form-group col-xs-8">
+                <select class="form-control" name="selectedTechs" [(ngModel)]="group.type" id="name" placeholder="Role"
+                  (change)="selectName();" required #id="ngModel">
+                  <option *ngFor="let obj of security" [value]="obj.value" [selected]="obj.value">{{obj.value}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button class="btn btn-primary" type="submit" (click)="createGroup(group)">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

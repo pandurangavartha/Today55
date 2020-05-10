@@ -1,0 +1,112 @@
+/* MODAL STYLES
+-------------------------------*/
+modal .modal {
+    /* modal container fixed across whole screen */
+    position: fixed;
+    display:block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* z-index must be higher than .modal-background */
+    z-index: 1000;
+     
+    /* enables scrolling for tall modals */
+    overflow: auto;
+  
+}
+modal .modal .modal-body {
+    padding: 20px;
+    background: #fff;
+    /* margin exposes part of the modal background */
+    margin: 40px;
+} 
+modal {
+    /* modals are hidden by default */
+    display: none;
+  
+   
+}
+modal .modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* semi-transparent black  */
+    background-color: #000;
+    opacity: 0.75;
+     
+    /* z-index must be below .modal and above everything else  */
+    z-index: 900;
+}
+body.modal-open {
+    /* body overflow is hidden to hide main scrollbar when modal window is open */
+    overflow: hidden;
+}
+img .hochiki{
+    height: 50px;
+    width: 147px;
+}
+.logologo{
+    padding-bottom: 15px;
+}
+
+/* .main-header .navbar {
+  margin-left: 217px ! important;
+} */
+/* .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .switch input {display:none;}
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  } */

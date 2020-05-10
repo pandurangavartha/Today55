@@ -1,0 +1,90 @@
+<section class="content">
+  <div class="row">
+    <!-- left column -->
+    <div class="col-md-6" style="margin: 100px;margin-left: 25%">
+      <!-- general form elements -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 style="text-align: center">Registration from</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form role="form">
+          <div class="box-body" [hidden]="showfields">
+            <div class="form-group">
+              <label for="exampleInputEmail1">First name</label>
+              <input class="form-control" [(ngModel)]="person.firstname" id="firstname" name="firstname" placeholder="firstname">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Last name</label>
+              <input class="form-control" [(ngModel)]="person.lastname" id="lastname" name="lastname" placeholder="lastname">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input class="form-control" [(ngModel)]="person.email" id="inputEmail" name="email" placeholder="Email">
+            </div>
+            <div ngModelGroup="password" #userPassword="ngModelGroup" required>
+              <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input class="form-control" type="password" [(ngModel)]="person.password" name="pwd" id="inputPassword"
+                  placeholder="Password" minlength="8" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <select class="form-control" name="selectedTechs" [(ngModel)]="person.role_id" id="name" placeholder="Role"
+                (change)="selectName();" required #id="ngModel">
+                <option *ngFor="let role of userRoles" [value]="role._id" [selected]="role.title">{{role.title}}
+
+                </option>
+              </select>
+
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> Check me out
+              </label>
+            </div>
+          </div>
+          <!-- /.box-body -->
+
+          <div class="box-footer" [hidden]="showfields">
+            <button type="submit" class="btn btn-primary " style="margin-left: 40%" (click)="onFormSubmit(person)">Submit</button>
+            <!-- <form novalidate (ngSubmit)="onFormSubmit(signupForm)" #signupForm="ngForm"> -->
+          </div>
+          <!-- <div class="box-body" [hidden]="!showfields">
+            <h3 style="text-align: center;color:red">Session Is Expired</h3>
+          </div> -->
+        </form>
+      </div>
+      <!-- /.box -->
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="form-group">
+              <label for="exampleInputPassword1">Conform Password</label>
+              <input class="form-control" id="exampleInputPassword1" placeholder="Password" type="password">
+            </div>  -->
+<!-- <div class="form-group">
+                  <label for="exampleInputFile">File input</label>
+                  <input id="exampleInputFile" type="file">
+
+                  <p class="help-block">Example block-level help text here.</p>
+                </div> -->

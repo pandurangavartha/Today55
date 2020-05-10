@@ -1,0 +1,30 @@
+.imgsize{
+    height: 15px;
+}
+.space {
+    padding-right:30px;
+    width: 180px;
+    border-block-end-style: 1px solid #000;
+    border-bottom: 1px solid rgb(236, 226, 226);
+}
+.button-cell {
+    width: 86px!important;
+}
+.btn btn-default{
+    font-size: 5px !important;
+}
+.iconsize {
+    font-size: 15px;    
+}
+
+.content-wrapper {
+    background-color: white !important;    
+}
+
+.wordbreak {
+    display: inline-block;
+    width: 140px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}

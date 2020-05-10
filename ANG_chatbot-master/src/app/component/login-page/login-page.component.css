@@ -1,0 +1,72 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400);
+body {
+    background-color: #fff;
+    -webkit-font-smoothing: antialiased;
+    font: normal 14px Roboto, arial, sans-serif;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.login-cont {
+    border: 1px solid #eee;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+    color: #f1f1f1;
+    width: 100%;
+    padding: 20px;
+}
+
+h4 {
+    border: 0 solid #fff;
+    border-bottom-width: 1px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.form-control {
+    /* border-radius: 10px; */
+}
+
+.login-footer {
+    padding-left: 20px;
+    color: #444;
+}
+
+.astric {
+    color: red;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+
+/* .login-page.wrapper {
+    background-color: red !important;
+} */
+
+#popup_this {
+    top: 35%;
+    left: 50%;
+    text-align:center;
+    margin-top: -50px;
+    margin-left: -100px;
+    position: fixed;
+    background: #fff;
+    /* padding: 30px; */
+}
+.b-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    color: #fff;
+    background: #ff0000;
+    padding: 5px 10px;
+}

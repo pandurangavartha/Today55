@@ -1,0 +1,11 @@
+// The file contents for the current environment will overwrite these during build.
+// The build system defaults to the dev environment which uses `environment.ts`, but if you do
+// `ng build --env=prod` then `environment.prod.ts` will be used instead.
+// The list of which env maps to which file can be found in `.angular-cli.json`.
+//url: 'http://192.168.11.126:3001/'
+//http://192.168.1.227:3000 202.131.112.86:8891  
+
+export const environment = {
+  production: false,
+  url: 'http://192.168.0.15:3001/'
+};

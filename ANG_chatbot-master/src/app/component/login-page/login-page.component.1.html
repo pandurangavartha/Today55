@@ -1,0 +1,273 @@
+<!--<div class="container">
+    <div class="row">-->
+<style>
+    .logincontainer {
+        width: 900px;
+    }
+
+
+    .container {
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .clearfix {
+        display: block;
+    }
+
+    .login-form {
+        margin-top: 0px;
+        background: #ffffff;
+        padding: 25px 21px;
+        -webkit-box-shadow: rgb(221, 221, 221) 1px 1px 5px;
+        -moz-box-shadow: rgb(221, 221, 221) 1px 1px 5px;
+        box-shadow: rgb(221, 221, 221) 1px 1px 5px;
+        box-shadow: rgb(221, 221, 221) 1px 1px 5px;
+        border: 1px solid rgba(234, 234, 234, 0.2);
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        margin-bottom: 20px;
+    }
+
+    .text-center {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    .logincontainer img {
+        width: 210px;
+    }
+
+    img {
+        vertical-align: middle;
+    }
+
+    .login-divider {
+        position: relative;
+        text-align: center;
+        height: 308px;
+        display: table;
+        width: 100%;
+    }
+
+    .login-divider span {
+        display: table-cell;
+        vertical-align: middle;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -25px;
+        margin-top: -25px;
+        height: 50px;
+        width: 50px;
+        border-radius: 3px;
+        border: 1px solid #c1c1c1;
+        background: #fff;
+        line-height: 48px;
+    }
+
+    .login-divider::before {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        content: "";
+        width: 1px;
+        height: 100%;
+        background: #c1c1c1;
+    }
+
+    .login-form h2 {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    .boxTitle {
+        line-height: 38px;
+        font-size: 26px;
+        color: #2972ff;
+        margin-bottom: 0;
+        font-weight: 300;
+    }
+
+    .text-left {
+        text-align: left;
+    }
+
+    .login-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-horizontal .form-group {
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    .or-box {
+        /*        position: relative;
+                    padding-top: 20px;
+                    margin-top: 20px;*/
+        border-top: 0px solid #dfdfdf;
+        /*        margin-top: 200px                              */
+    }
+</style>
+
+
+<div class="container logincontainer ng-scope">
+    <div class="text-center">
+        <!--        <a ng-href="http://192.168.11.126/discoveryToolFront" href="http://192.168.11.126/discoveryToolFront">-->
+        <img style="width:20% ;height :60px ; margin-bottom: 10px ;margin-left: -13%" src="assets/images/ang.png">
+        <!--            </a>-->
+    </div>
+    <div class="login-form clearfix">
+        <div class="col-md-3 col-sm-3"></div>
+        <!--            <div class="account-box">-->
+        <div class="col-md-5 col-sm-5">
+            <!--                <div class="logo ">
+                                    <img src="images/companylogo.jpg" alt=""/>
+                                </div>-->
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <h2 class="boxTitle text-left ng-binding">Enter your login details</h2>
+                </div>
+            </div>
+            <!--            <form class="form-signin" action="#">-->
+
+            <!-- <div class="form-group">
+                    <input style="height : 50px" type="text" class="form-control" placeholder="Email" ng-model="loginInfo.user_email" required autofocus />
+                </div> -->
+
+            <div class="form-group" [ngClass]="{'has-error': email.invalid && (email.dirty || email.touched),'has-success': email.valid && (email.dirty || email.touched) }">
+                <input type="email" class="form-control" id="email" placeholder="Enter Email" required name="email" [(ngModel)]="model.email"
+                    #email="ngModel" pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$">
+                <div *ngIf="email.errors && (email.dirty || email.touched)" class="has-error">
+                    <div [hidden]="!email.errors.required">
+                        Email is required!
+                    </div>
+                    <div [hidden]="!email.errors.pattern">
+                        Please enter a valid email!
+                    </div>
+                </div>
+                <span class="glyphicon glyphicon-envelope form-control-feedback" style="margin: 59px 24px 0px 0px;"></span>
+            </div>
+
+            <!--            <div class="form-group"> 
+                                <div class="col-sm-12">
+                                    <input ng-class="{'requiredClassadded': ((submitted & amp; & amp; loginInfo.$error.email) || (submitted & amp; & amp; loginInfo.email.$error.required))}" 
+                                           name="email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" 
+                                           class="form-control-two form-email input-lg ng-pristine ng-empty ng-valid-email ng-invalid ng-invalid-required ng-valid-pattern ng-touched" 
+                                           placeholder="Email ID" ng-model="loginInfo.user_email" required="" type="email">
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="has-error">
+                                        <span ng-show="(submitted & amp; & amp; loginInfo.$error.email)" class="error ng-binding ng-hide">Please provide valid email address</span>
+                                        <span ng-show="(submitted & amp; & amp; loginInfo.email.$error.required)" class="error ng-binding ng-hide">Please provide email address</span>
+                                    </div>
+                                </div>
+                            </div>-->
+
+            <!--            <div class="form-group" ng-class="{'has-error': loginInfo.password.$invalid & amp; & amp; loginInfo.password.$touched }">
+                                <div class="col-sm-12">
+                                    <input ng-class="{'requiredClassadded': ((submitted & amp; & amp; loginInfo.password.$error.required) || (submitted & amp; & amp; loginInfo.password.$error.minlength) || (submitted & amp; & amp; loginInfo.password.$error.maxlength)) }" name="password" placeholder="Password" ng-minlength="6" ng-maxlength="20" class="input-lg form-control-two form-password ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-minlength ng-valid-maxlength" ng-model="loginInfo.password" required="" type="password">
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="has-error">
+                                        <span ng-show="submitted & amp; & amp; loginInfo.password.$error.required" class="error ng-binding ng-hide">please provide password</span>
+                                        <span ng-show="submitted & amp; & amp; loginInfo.password.$error.minlength" class="error ng-binding ng-hide">Password should at least 6 character.</span>
+                                        <span ng-show="submitted & amp; & amp; loginInfo.password.$error.maxlength" class="error ng-binding ng-hide">Password should be less than 20 character.</span>
+                                    </div>
+                                </div>
+                            </div>-->
+            <!-- <div class="form-group">
+                    <input  style="height : 50px"  type="password" class="form-control" placeholder="Password" ng-model="loginInfo.password" required />
+                </div> -->
+
+            <div class="form-group" [ngClass]="{'has-error': pwd.invalid && (pwd.dirty || pwd.touched),'has-success': pwd.valid && (pwd.dirty || pwd.touched) }">
+                <input class="form-control" minlength="6" type="password" placeholder="Password" id="pwd" required name="pwd" [(ngModel)]="model.password"
+                    #pwd="ngModel" />
+                <div *ngIf="pwd.errors && (pwd.dirty || pwd.touched)" class="has-error">
+                    <div [hidden]="!pwd.errors.required">
+                        Password is required!
+                    </div>
+                    <div [hidden]="!pwd.errors.minlength">
+                        Please enter a valid password!
+                    </div>
+                </div>
+                <span class="glyphicon glyphicon-lock form-control-feedback" style="margin: 114px 24px 0px 0px;"></span>
+            </div>
+
+            <label class="checkbox">
+                <input type="checkbox" value="remember-me" /> Keep me signed in
+            </label>
+
+            <button class="btn btn-lg btn-block purple-bg" type="submit" (click)="login(model)">
+                Sign in</button>
+            <!--            </form>-->
+        </div>
+        <!--                <a class="forgotLnk" href="http://www.jquery2dotnet.com">I can't access my account</a>-->
+        <!--            <div class="or-box">
+                            <span class="or">OR</span>
+                        </div>-->
+        <!-- <div class="col-md-2 col-sm-2 text-center">
+            <div class="login-divider">
+                <span>OR</span>
+            </div>
+        </div>
+
+        <div class="col-md-5 col-sm-5">
+            <div class="form-group" style="padding-top:100px">
+                <a href="http://www.jquery2dotnet.com" class="btn btn-facebook btn-block">Facebook</a>
+            </div>
+
+            <div class="form-group" style="padding-top:10px">
+                <a g-login role="button" type="submit" class="googlePlus">
+                    <i class="fa fa-google" aria-hidden="true"></i>
+                    <span>Google</span> -->
+
+                    <!--<img class="img-responsive" ng-src="{{baseUrl}}/images/btn-gplush.png" alt="Connect with Google" />-->
+                
+                <!-- </a>
+            </div>
+            <div class="or-box row-block">
+                <div class="row">
+                    <div class="col-md-12 row-block">
+                        <a href="#/register" class="btn btn-primary btn-block">Create New Account</a>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!--                </div>-->
+        <!--                <div class="or-box row-block">
+                                <div class="row">
+                                    <div class="col-md-12 row-block">
+                                        <a href="#/register" class="btn btn-primary btn-block">Create New Account</a>
+                                    </div>
+                                </div>
+                            </div>-->
+        <!--            </div>-->
+    </div>
+</div>
+<!--    </div>
+    </div>-->
+<div class="alert alert-success" id="success-alert" style=" opacity: 0;
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 10px;">
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    <strong>Success! </strong>
+    user successfully loggedin.
+</div>
+
+<div class="alert alert-error" id="error-alert" style=" opacity: 0;
+    display: block;
+    position: fixed;
+    right: 10px;
+    
+    top: 10px;">
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    <strong>User</strong>
+    is Not Exist.
+</div>
