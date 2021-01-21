@@ -27,7 +27,7 @@
     "node-async-loop": "^1.2.2",
     "nodemailer": "^5.1.1",
     "nodemailer-smtp-transport": "^2.7.4",
-    "socket.io": "^2.0.4",
+    "socket.io": "^2.4.0",
     "static-favicon": "~1.0.0",
     "swagger-jsdoc": "^3.2.7",
     "swagger-ui-express": "^4.0.2",
